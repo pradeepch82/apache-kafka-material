@@ -23,7 +23,7 @@
 
 11.If you are dealing with big data, the idea is still the same. Read it from the data lake, process it using SQL or using a procedural language, and then, store the outcome back to the data lake.
 
-12.But processing a stream of data is not that straightforward. A stream is a continuous flow of data, it is unbounded. It’s an endless flow that keeps bringing more and more data to your system every second. How do you deal with that? How do you process that stream? Your data is not stored in a database table or in a file. The moment you start thinking about real-time stream processing, a whole bunch of new problems starts popping in your mind. And that’s what this course is all about. Solving those problems. Answering those questions.  
+12.But processing a stream of data is not that straightforward. A stream is a continuous flow of data, it is unbounded. Itâ€™s an endless flow that keeps bringing more and more data to your system every second. How do you deal with that? How do you process that stream? Your data is not stored in a database table or in a file. The moment you start thinking about real-time stream processing, a whole bunch of new problems starts popping in your mind. And thatâ€™s what this course is all about. Solving those problems. Answering those questions.  
 In this course, I am going to teach you two things.
 
 How do you create and manage a stream of data? I mean, to process data from a data lake, you must bring some data into a lake. Similarly, to handle a stream of data, you must create a stream. Right?
@@ -55,6 +55,148 @@ How do you create and manage a stream of data? I mean, to process data from a da
         data point is written to kafka
 
   
+
+Kafka JDBC Connector
+======================
+
+create database company;
+
+use company;
+
+create table employee(id int primary key,name text,email text,department text);
+
+insert into employee values(1,'ram','ram@gmail.com','HR');
+insert into employee values(2,'rahim','rahim@gmail.com','Insurance');
+insert into employee values(3,'david','david@gmail.com','Training');
+
+
+
+
+
+
+1.We need 2 dependencies/jar file
+   1.mysql connector.jar
+   2.kafka connect jdbc
+
+2.Copy both jars inside libs folder of Kafka folder
+
+3.Create a mysql databse and a table
+
+4.Start zookeeper 
+  zookeeper-server-start config/zookeeper.properties
+
+5.start kafka
+  kafka-server-start config/server.properties
+
+6.start connector
+
+  connect-distrubuted config/connect-distrubuted.properties
+
+
+POST  http://localhost:8083/connectors -H "Content-Type: application/json" 
+
+-d '{
+        "name": "mysql-source-connector",
+        "config": {
+                "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+                "tasks.max":"2",
+                "connection.url": "jdbc:mysql://localhost:3306/company",
+                "connection.user": "root",
+                "connection.password": "admin",
+                "topic.prefix": "pradeep-",
+                "mode":"incrementing",
+                "table.whitelist":"employees",
+                "incrementing.column.name":"id",
+                "timestamp.column.name":"modified",
+                "poll.interval":1000
+                }
+        }'
+
+
+To see the connectors
+=====================
+http://localhost:8083/connectors
+http://localhost:8083/connectors/mysql-source-connector/status
+
+
+
+
+
+Kafka To MySQL Sink Connector
+================================
+
+kafka-topics.bat --zookeeper localhost:2181 --create --topic test --partitions 1 --replication-factor 1
+
+
+
+POST  http://localhost:8083/connectors -H "Content-Type: application/json" 
+
+
+   {
+        "name": "mysql-sink-connector",
+        "config": {
+                "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+                "tasks.max":"1",     
+                "connection.url": "jdbc:mysql://localhost:3306/company?user=root&password=admin",
+                "topics": "test",
+                "auto.create":"true"
+                }
+     }
+
+http://localhost:8083/connectors
+http://localhost:8083/connectors/mysql-source-connector/status
+
+
+
+start kafka-console-producer.bat --broker-list localhost:9092 --topic employee
+>
+{
+  "schema": {
+    "type": "struct",
+    "fields": [
+      {
+        "type": "int64",
+        "optional": false,
+        "field": "id"
+      },
+      {
+        "type": "string",
+        "optional": true,
+        "field": "name"
+      },
+      {
+        "type": "string",
+        "optional": true,
+        "field": "email"
+      },
+      {
+        "type": "string",
+        "optional": true,
+        "field": "department"
+      }
+    ],
+    "optional": false,
+    "name": "test"
+  },
+  "payload": {
+    "id": 1,
+    "name": "ram",
+    "email": "ram@gmail.com",
+    "department": "training"
+}}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
