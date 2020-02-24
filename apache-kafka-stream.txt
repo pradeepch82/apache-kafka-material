@@ -1,0 +1,61 @@
+1.Data processing started with the idea of capturing and storing data first and then processing it later.
+
+2.When Bigdata processing began to emerge, it followed the same pattern, obtain the data first, saves it, and then, transforms it later. 
+
+3.Data Lake is the result of the same idea. Data Lake is a place where data goes to sit, and after that, you process it in smaller batches. 
+
+4.While many of us are building upon the data lake, at the same time, a whole new fleet of technology companies is architecting their systems in a non-traditional method.
+
+5.They take everything happening in the business and make it available as a stream of events.
+
+6.Then they create applications to tap into the stream, consume data packets in real-time and put them to use for taking critical actions and decision making.  
+
+7.Look  about the change in perspective, we are not looking at the data as a table in a database or a file in the data lake. Data lake is stationary, but the stream is data in motion.
+
+8.When you process a dataset that is already sitting in a database, or it is stored in a data lake, we call it as data processing.
+
+9.But when you are processing a data stream or a dataset which is in motion, we call it "stream processing."
+
+10.And when you want to do it in seconds or in milliseconds, the idea is termed as real-time stream processing. 
+
+
+10.You already learned and a kind of mastered data processing techniques. It is straightforward. Read data from the database, process it using SQL or using a procedural language, and then, store the outcome back to a database.
+
+11.If you are dealing with big data, the idea is still the same. Read it from the data lake, process it using SQL or using a procedural language, and then, store the outcome back to the data lake.
+
+12.But processing a stream of data is not that straightforward. A stream is a continuous flow of data, it is unbounded. It’s an endless flow that keeps bringing more and more data to your system every second. How do you deal with that? How do you process that stream? Your data is not stored in a database table or in a file. The moment you start thinking about real-time stream processing, a whole bunch of new problems starts popping in your mind. And that’s what this course is all about. Solving those problems. Answering those questions.  
+In this course, I am going to teach you two things.
+
+How do you create and manage a stream of data? I mean, to process data from a data lake, you must bring some data into a lake. Similarly, to handle a stream of data, you must create a stream. Right?
+
+
+
+
+1.Stream from kafka
+         <null,"Hello hello World">
+
+2.MapValues lowercase   
+         <null,"hello hello world">
+
+3.FlatMapValues split by space
+         <null,"hello"> <null,"hello"> <null,"world">
+
+4.SelectKey to apply key
+         <"hello","hello"> <"hello","hello"> <"world","world">
+
+5.GroupBkey before aggregation
+        (<"hello","hello"> <"hello","hello">) (<"world","world">)
+            
+
+6.Count occurences in each group
+        <"hello",2>  <"world",1>
+
+
+7.To in order to write the results back to Kafka
+        data point is written to kafka
+
+  
+
+
+
+

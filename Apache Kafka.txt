@@ -1,0 +1,381 @@
+Apache Kafka   
+============
+
+\\10.128.32.91  <enter>
+
+Username :trnguser1
+Password :Syntel123
+
+New Training Data\Pradeep\ Kafka_2.12-2.2.1.zip 
+
+
+7600# Passcode : 704335
+
+
+PSTN  :02241137602 or 022-67874110  Passcode 692105
+
+
+1. Why Kafka
+2. What is Kafka – An Introduction
+3. Kafka Components and Use Cases
+4. Implementing Kafka on a Single Node
+------------------------------------------------------------------------------------------
+
+
+Why Kafka?
+1.Multiple Data Sources -
+2.USER ACTIVITY, WEBLOGS, SYSTEM LOGS, MATRIX COLLECTION
+(JMX - Memory cpu of each server etc)
+Process the Data
+3.Send to Multiple Destinations for processing –
+4.HADOOP, DATAWAREHOUSE, SEARCH ENGINE, MONITORING
+Collect the Processed Data
+5. Send back the analyzed data to some place for Final Analysis Reports –
+6.ESPRESSO, ORCACLE, VOLDEMORT
+Deliver the Data for Reporting -
+7.Send the data to PRODUCTION SERVICES where the final analysis will
+show.
+--------------------------------------------------------------------------------------
+
+What is Apache Kafka?
+1. Developed at LinkedIn
+2. Fast, Distributed, Scalable, Partitioned, Fault-Tolerant (replicated) Commit Log
+Service
+3. Functionality of publish-subscribe Messaging System
+4.Publish-Subscribe – A model where one message is delivered to all the
+subscribers. It is like broadcasting. 
+
+---------------------------------------------------------------------------------------
+
+Features
+1 Fast really fast!
+3 High-performance TCP protocol
+4 Persistent messaging
+5 Retains all published messages for a configurable period
+6 High Throughput
+7 Distributed & Scalable
+8 No Standard Dependency like JMS
+9 Kafka does not care if the Consumers consumed the messages or NOT
+
+------------------------------------------------------------------------------------------
+
+Use Cases
+1 Messaging
+2 Website Activity Tracking
+3 Operational Metrics
+4 Log Aggregation
+5 Stream Processing
+6 Event Sourcing
+7 Used at LinkedIn, Netflix, Twitter, Spotify, and others
+
+
+
+
+
+
+1. Producer 
+==========
+ An application that sends the messages(data or record ) to kafka
+
+
+ =>Topic Name
+ =>Partition Number (optinal)
+ =>Message (Key,Value)=>(employeeId,Employee)=> 
+            Key ->optional
+
+  HashMap (capacity 16)
+             0 1 2 3 4 5.......................15 
+
+    hm.put("pradeep",34);
+    hm.put("pranal",34);
+
+
+       key ->hashing alogrthim => 0 <no of partitions
+
+
+Message :
+                  1.Small to medium sized piece of data
+                  2.It may have some meaning or some schema for us but for 
+                   apache kafka It is simple array of bytes.
+
+
+    => send and forget
+    => send and wait for acknowledgement
+    => send and don't wait,asynchronusly(callback);
+
+
+
+2. Consumer
+                  An application which reads the data from Kafka Server.
+
+
+                Producer1                                                   Consumer1
+                                                  Kafka Server 
+                Producer2                                                   Consumer2
+
+
+3. Broker
+                   It is a Kafka Server.
+                   It's a just meaningful name given to kafka server
+                   Kafka Server acts as a broker between Producer and Consumer
+                   Producer and Consumer don't interact directly
+                   They use Kafka Server as a agent or broker to exchange the messages
+        
+4. Cluster
+            A group of computers sharing the workload for common purpose.
+            Kafka is a distrubuted system. so Cluster as same meaning as kafka.
+
+
+5. Topic
+
+                 Topic is a arbitary name for kafka stream
+
+ T1               0   |  1   |  2   | 3
+
+ T2               0   |  1   |  2   | 3
+
+ T3               0   |  1   |  2   | 3
+  
+             Partition  0
+             Partition  1 -> 0:'Hello World',1:'bye'
+             Partition  2
+             Partition  3 -> 0:'Hi'
+ 
+
+
+6. Partitions
+                      The data stored in a topic is huge or it is beyond storage capacity of a single computer.
+                      In this case Broker may have challange to store this data.
+                      One of the solution is to break that data in to 2 or more parts and distrubute it to a multiple computers.
+                      Kafka is a distrubuted system that runs on cluster of computers.
+                      Kafka can break the topic in partitions and store one partition on 
+                      one computer.  
+                      
+                      But how many partitions?
+                      How kafka will decide that whether it has do 100 or 10 partiotions.
+                      Kafka will not take any decision. We have to take this decision.
+                      
+
+
+7.Offset
+                      It is a sequence no of a message in a partition.
+                      This number will be assigned to message as soon as message arrives.
+                      This sequence will not change .it is immutable.
+                      Kafka stores the message in a sequence in which they arrives.
+                      The offset starts from zero.offsets are local to the partitions and not local to the partitions.
+
+                  Global uniqueue idenetifier of a message.
+                                      
+                 Topic Name ->Partition Number->Offset =>
+                 using these three thins you can locate a message.
+ 
+
+8. Consumer groups
+                       A group of consumers acting as a single logical unit.
+
+                       Partioning and consumer group  is a tool for scalability.
+
+                       Maximum no of consumers in a group is total no of partitions in a topic.      
+
+                       Kafka doesn't allow more than 2 consumers to read data from one partition of the topic simultaneously.
+                       This restriction is necessary of double reading of records. 
+
+
+
+
+Apache ZooKeeper is an effort to develop and maintain an open-source server 
+which enables highly reliable distributed coordination.
+
+
+What is ZooKeeper?
+ZooKeeper is a centralized service for maintaining configuration information,naming, 
+providing distributed synchronization, and providing group services. 
+
+All of these kinds of services are used in some form or 
+another by distributed applications. 
+Each time they are implemented there is a lot of work that goes into fixing the
+ bugs and race conditions that are inevitable. Because of the difficulty of implementing
+ these kinds of services, applications initially usually skimp on them, 
+which make them brittle in the presence of change and difficult to manage. 
+Even when done correctly, different implementations of these services lead to 
+management complexity when the applications are deployed.
+
+
+
+
+
+
+
+
+Step 1 : Start zookeeper  (By default runs on 2181 port) =>configuration file :zookepper.properties
+====================================================================================================
+
+C:\kafka_2.12-2.2.1\bin\windows>zookeeper-server-start.bat ..\..\config\zookeeper.properties
+
+
+
+Step 2 : Start Kafka  (By default runs on 9092 port) =>  configuration file :server.properties
+===================================================================================================
+C:\kafka_2.12-2.2.1\bin\windows>kafka-server-start.bat ..\..\config\server.properties
+
+
+
+Step 3 :create a topic
+========================
+
+C:\kafka_2.12-2.2.1\bin\windows>kafka-topics.bat --zookeeper localhost:2181 --create --topic MyFirstTopic --partitions 3 --replication-factor 3
+
+Created topic "MyFirstTopic".
+
+C:\kafka_2.12-2.2.1\bin\windows>
+
+
+To start a Console Producer
+=============================
+
+C:\kafka_2.12-2.2.1\bin\windows>kafka-console-producer.bat --broker-list localhost:9092 --topic MyFirstTopic
+>
+
+To start a Console Consumer
+==========================
+C:\kafka_2.12-2.2.1\bin\windows>kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic MyFirstTopic
+
+
+To see all topics created
+============================
+C:\kafka_2.12-2.2.1\bin\windows>kafka-topics.bat --list --zookeeper localhost:2181
+MyFirstTopic
+
+
+
+ü Go to page – http://kafka.apache.org/downloads.html
+ü Click the Kafka Binary Tar you want to download
+ü Click on the available apache Mirror
+ØThis will download the kafka-<version>.tgz file (~34 MB)
+ü Move this file to your Linux machine via Winscp
+------------------------------------------------------------------------------------------
+Pre-requisites
+
+ü Create a new user Kafka
+ü Login with root and run below commands –
+Øuseradd kafka
+ØSet the Password –
+Øpasswd kafka
+ü Place the downloaded Kafka tarball at /home/kafka/
+ü Untar the package –
+Øtar –xvzf kafka_2.10-0.9.0.0.tga
+ü Rename the untar directory to “kafka”
+ü mv kafka_2.10-0.9.0.0 kafka
+ü Set the KAFKA_HOME in .bashrc and run “source .bashrc” -
+export KAFKA_HOME=/home/kafka/kafka
+PATH=$PATH:$KAFKA_HOME/bin
+export PATH
+ØRun command – “source .bashrc”
+
+Using Kafka’s inbuilt Zookeeper
+ü Start the Zookeeper Service –
+Ønohup $KAFKA_HOME/bin/zookeeper-server-start.sh
+$KAFKA_HOME/config/zookeeper.properties &
+ü Start the Kafka Server (Broker) –
+Ønohup $KAFKA_HOME/bin/kafka-server-start.sh
+$KAFKA_HOME/config/server.properties &
+ü Create a ‘test’ Topic –
+Ø$KAFKA_HOME/bin/kafka-topics.sh --create --zookeeper localhost:2181
+--replication-factor 1 --partitions 1 --topic test
+ü Check the Topic if its created or not –
+Ø$KAFKA_HOME/bin/kafka-topics.sh --list --zookeeper localhost:2181
+ü Start the Console Producer to produce the messages –
+Ø$KAFKA_HOME/bin/kafka-console-producer.sh --broker-list
+localhost:9092 --topic test
+ü Start the Console Consumer to consume the messages –
+Ø$KAFKA_HOME/bin/kafka-console-consumer.sh --zookeeper
+localhost:2181 --topic test --from-beginning
+------------------------------------------------------------------------------------------
+
+Combining Kafka with any other Distributed System to achieve more enhanced
+functionality is called the Integration
+ü Some Examples –
+ØKafka with Flume – Easiest way to load data from a Kafka Source to
+Hadoop
+ØKafka with Spark/Storm – To process the data in Real Time
+------------------------------------------------------------------------------------------
+
+
+connect-standalone.bat ..\..\config\connect-standalone.properties ..\..\config\connect-file-source.properties ..\..\config\connect-file-sink.properties
+
+
+From Nortel   :Passcode : 695466
+-------------
+7600#
+US: +1-919-948-2233 or +1-919-719-5708
+Europe : +48-123-232-560
+
+
+From Mobile : Dial
+--------------------
+ 0-22-67874110 or 0-2241137602 followed by the passcode    690144
+
+
+kafka-topics --create --topic numbers-topic --zookeeper localhost:2181 --partitions 1 --replication-factor 1
+
+kafka-topics --create --topic sum-of-odd-numbers-topic --zookeeper localhost:2181 --partitions 1 --replication-factor 1
+
+
+
+start kafka-console-consumer --topic numbers-topic --from-beginning --bootstrap-server localhost:9092  --property value.deserializer=org.apache.kafka.common.serialization.IntegerDeserializer
+
+
+
+
+start kafka-console-consumer --topic sum-of-odd-numbers-topic --from-beginning --bootstrap-server localhost:9092 --property value.deserializer=org.apache.kafka.common.serialization.IntegerDeserializer
+
+
+
+start kafka-console-producer.bat --broker-list localhost:9092 --topic numbers-topic
+
+
+day2
+=======
+
+
+C:\kafka_2.12-2.2.1\bin\windows>kafka-topics --create --topic Atostopic --zookeeper localhost:2181 --partitions 3 --replication-factor 1
+
+
+C:\kafka_2.12-2.2.1\bin\windows>kafka-topics  --zookeeper localhost:2181 --list topic
+
+C:\kafka_2.12-2.2.1\bin\windows>kafka-topics  --zookeeper localhost:2181 --describe --topic Atostopic
+
+C:\kafka_2.12-2.2.1\bin\windows>start kafka-console-consumer --topic Atostopic --bootstrap-server localhost:9092  --property print.key=true --partition 0
+
+
+C:\kafka_2.12-2.2.1\bin\windows>start kafka-console-consumer --topic Atostopic --bootstrap-server localhost:9092  --property print.key=true --partition 1
+
+C:\kafka_2.12-2.2.1\bin\windows>start kafka-console-consumer --topic Atostopic --bootstrap-server localhost:9092  --property print.key=true --partition 2
+
+
+kafka-console-producer.bat --broker-list localhost:9092 --topic Atostopic --property "parse.key=true" --property "key.separator=:"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
