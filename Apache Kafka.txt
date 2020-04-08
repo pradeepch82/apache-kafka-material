@@ -16,7 +16,7 @@ PSTN  :02241137602 or 022-67874110  Passcode 692105
 
 
 1. Why Kafka
-2. What is Kafka ñ An Introduction
+2. What is Kafka ‚Äì An Introduction
 3. Kafka Components and Use Cases
 4. Implementing Kafka on a Single Node
 ------------------------------------------------------------------------------------------
@@ -27,10 +27,10 @@ Why Kafka?
 2.USER ACTIVITY, WEBLOGS, SYSTEM LOGS, MATRIX COLLECTION
 (JMX - Memory cpu of each server etc)
 Process the Data
-3.Send to Multiple Destinations for processing ñ
+3.Send to Multiple Destinations for processing ‚Äì
 4.HADOOP, DATAWAREHOUSE, SEARCH ENGINE, MONITORING
 Collect the Processed Data
-5. Send back the analyzed data to some place for Final Analysis Reports ñ
+5. Send back the analyzed data to some place for Final Analysis Reports ‚Äì
 6.ESPRESSO, ORCACLE, VOLDEMORT
 Deliver the Data for Reporting -
 7.Send the data to PRODUCTION SERVICES where the final analysis will
@@ -42,7 +42,7 @@ What is Apache Kafka?
 2. Fast, Distributed, Scalable, Partitioned, Fault-Tolerant (replicated) Commit Log
 Service
 3. Functionality of publish-subscribe Messaging System
-4.Publish-Subscribe ñ A model where one message is delivered to all the
+4.Publish-Subscribe ‚Äì A model where one message is delivered to all the
 subscribers. It is like broadcasting. 
 
 ---------------------------------------------------------------------------------------
@@ -248,56 +248,56 @@ MyFirstTopic
 
 
 
-¸ Go to page ñ http://kafka.apache.org/downloads.html
-¸ Click the Kafka Binary Tar you want to download
-¸ Click on the available apache Mirror
-ÿThis will download the kafka-<version>.tgz file (~34 MB)
-¸ Move this file to your Linux machine via Winscp
+√º Go to page ‚Äì http://kafka.apache.org/downloads.html
+√º Click the Kafka Binary Tar you want to download
+√º Click on the available apache Mirror
+√òThis will download the kafka-<version>.tgz file (~34 MB)
+√º Move this file to your Linux machine via Winscp
 ------------------------------------------------------------------------------------------
 Pre-requisites
 
-¸ Create a new user Kafka
-¸ Login with root and run below commands ñ
-ÿuseradd kafka
-ÿSet the Password ñ
-ÿpasswd kafka
-¸ Place the downloaded Kafka tarball at /home/kafka/
-¸ Untar the package ñ
-ÿtar ñxvzf kafka_2.10-0.9.0.0.tga
-¸ Rename the untar directory to ìkafkaî
-¸ mv kafka_2.10-0.9.0.0 kafka
-¸ Set the KAFKA_HOME in .bashrc and run ìsource .bashrcî -
+√º Create a new user Kafka
+√º Login with root and run below commands ‚Äì
+√òuseradd kafka
+√òSet the Password ‚Äì
+√òpasswd kafka
+√º Place the downloaded Kafka tarball at /home/kafka/
+√º Untar the package ‚Äì
+√òtar ‚Äìxvzf kafka_2.10-0.9.0.0.tga
+√º Rename the untar directory to ‚Äúkafka‚Äù
+√º mv kafka_2.10-0.9.0.0 kafka
+√º Set the KAFKA_HOME in .bashrc and run ‚Äúsource .bashrc‚Äù -
 export KAFKA_HOME=/home/kafka/kafka
 PATH=$PATH:$KAFKA_HOME/bin
 export PATH
-ÿRun command ñ ìsource .bashrcî
+√òRun command ‚Äì ‚Äúsource .bashrc‚Äù
 
-Using Kafkaís inbuilt Zookeeper
-¸ Start the Zookeeper Service ñ
-ÿnohup $KAFKA_HOME/bin/zookeeper-server-start.sh
+Using Kafka‚Äôs inbuilt Zookeeper
+√º Start the Zookeeper Service ‚Äì
+√ònohup $KAFKA_HOME/bin/zookeeper-server-start.sh
 $KAFKA_HOME/config/zookeeper.properties &
-¸ Start the Kafka Server (Broker) ñ
-ÿnohup $KAFKA_HOME/bin/kafka-server-start.sh
+√º Start the Kafka Server (Broker) ‚Äì
+√ònohup $KAFKA_HOME/bin/kafka-server-start.sh
 $KAFKA_HOME/config/server.properties &
-¸ Create a ëtestí Topic ñ
-ÿ$KAFKA_HOME/bin/kafka-topics.sh --create --zookeeper localhost:2181
+√º Create a ‚Äòtest‚Äô Topic ‚Äì
+√ò$KAFKA_HOME/bin/kafka-topics.sh --create --zookeeper localhost:2181
 --replication-factor 1 --partitions 1 --topic test
-¸ Check the Topic if its created or not ñ
-ÿ$KAFKA_HOME/bin/kafka-topics.sh --list --zookeeper localhost:2181
-¸ Start the Console Producer to produce the messages ñ
-ÿ$KAFKA_HOME/bin/kafka-console-producer.sh --broker-list
+√º Check the Topic if its created or not ‚Äì
+√ò$KAFKA_HOME/bin/kafka-topics.sh --list --zookeeper localhost:2181
+√º Start the Console Producer to produce the messages ‚Äì
+√ò$KAFKA_HOME/bin/kafka-console-producer.sh --broker-list
 localhost:9092 --topic test
-¸ Start the Console Consumer to consume the messages ñ
-ÿ$KAFKA_HOME/bin/kafka-console-consumer.sh --zookeeper
+√º Start the Console Consumer to consume the messages ‚Äì
+√ò$KAFKA_HOME/bin/kafka-console-consumer.sh --zookeeper
 localhost:2181 --topic test --from-beginning
 ------------------------------------------------------------------------------------------
 
 Combining Kafka with any other Distributed System to achieve more enhanced
 functionality is called the Integration
-¸ Some Examples ñ
-ÿKafka with Flume ñ Easiest way to load data from a Kafka Source to
+√º Some Examples ‚Äì
+√òKafka with Flume ‚Äì Easiest way to load data from a Kafka Source to
 Hadoop
-ÿKafka with Spark/Storm ñ To process the data in Real Time
+√òKafka with Spark/Storm ‚Äì To process the data in Real Time
 ------------------------------------------------------------------------------------------
 
 
@@ -360,7 +360,37 @@ kafka-console-producer.bat --broker-list localhost:9092 --topic Atostopic --prop
 
 
 
+WordCount comands
+============================
 
+Reference site :https://docs.confluent.io/current/streams/quickstart.html
+
+
+# Create the input topic
+
+  kafka-topics --create --bootstrap-server localhost:9092,localhost:9093,localhost:9094  --replication-factor 3 --partitions 1 --topic streams-plaintext-input
+
+
+
+
+# Create the output topic
+   kafka-topics --create --bootstrap-server localhost:9092,localhost:9093,localhost:9094  --replication-factor 3 --partitions 1 --topic streams-wordcount-output
+   
+   
+   
+# start console cosumer
+kafka-console-consumer --bootstrap-server localhost:9092,localhost:9093,localhost:9094  --topic streams-plaintext-input
+   
+
+# start console cosumer
+   
+ kafka-console-consumer --bootstrap-server localhost:9092,localhost:9093,localhost:9094  --topic streams-wordcount-output --from-beginning --formatter  kafka.tools.DefaultMessageFormatter --property print.key=true --property key.deserializer=org.apache.kafka.common.serialization.StringDeserializer --property value.deserializer=org.apache.kafka.common.serialization.LongDeserializer  
+   
+   
+ 
+# start console cosumer
+
+kafka-console-producer --broker-list localhost:9092,localhost:9093,localhost:9094 --topic streams-plaintext-input
 
 
 
