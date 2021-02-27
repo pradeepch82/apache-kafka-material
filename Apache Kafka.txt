@@ -395,6 +395,11 @@ kafka-console-producer --broker-list localhost:9092,localhost:9093,localhost:909
 
 
 
+File Connector example
+===========================
+start connect-standalone.bat ..\..\config\connect-standalone.properties ..\..\config\connect-file-source.properties ..\..\config\connect-file-sink.properties
+
+
 
 
 
